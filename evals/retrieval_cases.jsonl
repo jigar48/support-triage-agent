@@ -1,0 +1,15 @@
+{"query": "how long does a refund take", "expected": ["Refund timelines"]}
+{"query": "my package hasn't moved in a week", "expected": ["Delayed or lost packages"]}
+{"query": "you charged me twice", "expected": ["Failed payments and double charges"]}
+{"query": "where is my stuff", "expected": ["Tracking your order", "Delayed or lost packages"]}
+{"query": "can i get money back on gift card", "expected": ["Return policy"]}
+{"query": "paisa kab aayega", "expected": ["Refund timelines"]}
+{"query": "wrong size, I want a medium instead", "expected": ["Exchanges"]}
+{"query": "box came crushed and the lamp inside is broken", "expected": ["Damaged or defective items"]}
+{"query": "can I pay cash when it arrives", "expected": ["Payment methods"]}
+{"query": "I typed the wrong address, ordered 10 min ago", "expected": ["Changing your shipping address"]}
+{"query": "my blender stopped working after 6 months", "expected": ["Product warranty"]}
+{"query": "I'm going to dispute this with my bank", "expected": ["Escalations and disputes"]}
+{"query": "do you have faster delivery", "expected": ["Shipping times and costs"]}
+{"query": "should I size up for this jacket", "expected": ["Size guide and fit"]}
+{"query": "cancel my order pls", "expected": ["Cancelling an order"]}
