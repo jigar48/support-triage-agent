@@ -1,9 +1,14 @@
-"""Retrieval eval: is the right article ranked 1st (hit@1) or in the top 3 (hit@3)?"""
+"""Retrieval eval: hit@1 and hit@3. Use --rewrite to run Claude query rewriting first."""
 
 import json
+import sys
 from pathlib import Path
 
 from support_triage_agent.rag import search
+
+REWRITE = "--rewrite" in sys.argv
+if REWRITE:
+    from support_triage_agent.graph import understand
 
 cases = [
     json.loads(line)
@@ -13,13 +18,16 @@ cases = [
 
 hit1 = hit3 = 0
 for case in cases:
-    top = [article for article, _, _ in search(case["query"], k=3)]
+    query = understand({"email": case["query"]})["search_query"] if REWRITE else case["query"]
+    top = [article for article, _, _ in search(query, k=3)]
     ok1 = top[0] in case["expected"]
     ok3 = any(a in case["expected"] for a in top)
     hit1 += ok1
     hit3 += ok3
     mark = "PASS" if ok1 else ("TOP3" if ok3 else "FAIL")
-    print(f"{mark:5} {case['query'][:48]:48} -> {top[0]}")
+    shown = f"{case['query'][:30]} => {query[:30]}" if REWRITE else case["query"][:48]
+    print(f"{mark:5} {shown:64} -> {top[0]}")
 
 n = len(cases)
-print(f"\nhit@1: {hit1}/{n} = {hit1 / n:.0%}    hit@3: {hit3}/{n} = {hit3 / n:.0%}")
+label = "with rewrite" if REWRITE else "baseline"
+print(f"\n[{label}] hit@1: {hit1}/{n} = {hit1 / n:.0%}    hit@3: {hit3}/{n} = {hit3 / n:.0%}")
